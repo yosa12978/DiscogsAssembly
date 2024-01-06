@@ -11,11 +11,12 @@ func init() {
 	rootCmd.AddCommand(setTokenCmd)
 	rootCmd.AddCommand(downloadReleaseCmd)
 	rootCmd.AddCommand(whoamiCmd)
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
 }
 
 var rootCmd = &cobra.Command{
 	Use:     "discasm",
-	Short:   "discasm is a tool for downloading images from discogs release",
+	Short:   "Discasm is a tool for downloading images from discogs release",
 	Version: "0.1-alpha",
 }
 

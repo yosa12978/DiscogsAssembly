@@ -9,7 +9,7 @@ import (
 
 var whoamiCmd = &cobra.Command{
 	Use:   "whoami",
-	Short: "displays current user information",
+	Short: "Displays current user information",
 	Run:   whoami,
 }
 
@@ -21,8 +21,8 @@ func whoami(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	fmt.Printf("Id: %v\n", user.Id)
-	fmt.Printf("Username: %v\n", user.Username)
-	fmt.Printf("URL: %v\n", user.Resource_url)
-	fmt.Printf("Consumer Name: %v\n", user.Consumer_name)
+	fmt.Printf("Id: %d\n", user.Id)
+	fmt.Printf("Username: %s\n", user.Username)
+	fmt.Printf("URL: %s\n", user.Resource_url)
+	fmt.Printf("Consumer Name: %s\n", user.Consumer_name)
 }

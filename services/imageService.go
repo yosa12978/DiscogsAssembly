@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/yosa12978/DiscogsAssembly/helpers"
@@ -23,11 +24,11 @@ type imageService struct {
 func NewImageService() ImageService {
 	service := new(imageService)
 	service.discogsRepo = repos.NewDiscogsRepo()
-	return new(imageService)
+	return service
 }
 
-func (service *imageService) Download(url, output string) error {
-	release, err := service.discogsRepo.GetRelease(url)
+func (service *imageService) Download(id, output string) error {
+	release, err := service.discogsRepo.GetRelease(id)
 	if err != nil {
 		return err
 	}
@@ -44,19 +45,24 @@ func (service *imageService) Download(url, output string) error {
 
 func (service *imageService) createPath(output string, release *models.Release) (string, error) {
 	path := fmt.Sprintf("%s/%s %d", output, release.Title, release.Id)
-	fmt.Printf("%d path: %v\n", release.Id, path)
 	err := os.MkdirAll(path, 0700)
 	return path, err
 }
 
 func (service *imageService) downloadImages(path string, release *models.Release) error {
+	var artists []string
+	for i := 0; i < len(release.Artists); i++ {
+		artists = append(artists, release.Artists[i].Name)
+	}
+	fmt.Printf("Downloading %s - %s\n", strings.Join(artists, ", "), release.Title)
+
 	for i := 0; i < len(release.Images); i++ {
 		imagePath := fmt.Sprintf("%s/img%d.jpeg", path, i)
 		err := helpers.DownloadFile(release.Images[i].Uri, imagePath)
 		if err != nil {
-			log.Printf(err.Error())
+			fmt.Println(err.Error())
 		}
-		time.Sleep(2 * time.Second)
+		time.Sleep(1500 * time.Millisecond)
 	}
 	return nil
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"github.com/yosa12978/DiscogsAssembly/repos"
 	"github.com/yosa12978/DiscogsAssembly/services"
 )
 
@@ -14,7 +14,7 @@ func init() {
 
 var downloadReleaseCmd = &cobra.Command{
 	Use:     "download",
-	Short:   "downloads release images and metadata by it's discogs id",
+	Short:   "Downloads release images and metadata by it's discogs id",
 	Example: "discasm download {release_id} (flags)",
 	Run:     downloadRelease,
 }
@@ -24,18 +24,23 @@ func downloadRelease(cmd *cobra.Command, args []string) {
 		cmd.Help()
 		return
 	}
+
+	repo := repos.NewDiscogsRepo()
+	if _, err := repo.GetCurrentUser(); err != nil {
+		fmt.Println("you unable to download images if you are unauthorized")
+		fmt.Println("use discasm token {token} to authenticate via discogs api token")
+		return
+	}
+
 	output, err := cmd.Flags().GetString("output")
 	if err != nil {
 		cmd.Help()
 		return
 	}
 
-	token := viper.Get("discogs.token")
-	release_url := fmt.Sprintf("https://api.discogs.com/releases/%s?token=%s", args[0], token)
-
 	imgService := services.NewImageService()
-	if err := imgService.Download(release_url, output); err != nil {
-		fmt.Printf("Error: %s", err.Error())
+	if err := imgService.Download(args[0], output); err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 }
