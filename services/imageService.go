@@ -64,6 +64,7 @@ func (service *imageService) downloadImages(path string, release *models.Release
 		}
 		time.Sleep(1500 * time.Millisecond)
 	}
+	fmt.Println("Download complete")
 	return nil
 }
 

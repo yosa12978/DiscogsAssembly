@@ -14,7 +14,9 @@ type Release struct {
 	Country string   `json:"country"`
 	Uri     string   `json:"uri"`
 	Artists []Artist `json:"artists"`
+	Styles  []string `json:"styles"`
 	Images  []Image  `json:"images"`
+	Genres  []string `json:"genres"`
 	Year    int      `json:"year"`
 }
 
@@ -29,11 +31,13 @@ type Artist struct {
 type ReleaseMetadata struct {
 	Id      int      `json:"discogs_id"`
 	Uri     string   `json:"discogs_url"`
-	Title   string   `json:"title"`
-	Country string   `json:"country"`
 	Artists []string `json:"artists"`
-	Images  []string `json:"images"`
+	Title   string   `json:"title"`
+	Genres  []string `json:"genres"`
+	Styles  []string `json:"styles"`
+	Country string   `json:"country"`
 	Year    int      `json:"year"`
+	Images  []string `json:"images"`
 }
 
 func ToMetadata(release *Release) *ReleaseMetadata {
@@ -51,6 +55,8 @@ func ToMetadata(release *Release) *ReleaseMetadata {
 		Uri:     release.Uri,
 		Title:   release.Title,
 		Country: release.Country,
+		Genres:  release.Genres,
+		Styles:  release.Styles,
 		Artists: artists,
 		Year:    release.Year,
 		Images:  images,

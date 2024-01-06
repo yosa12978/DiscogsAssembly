@@ -32,9 +32,11 @@ func getRelease(cmd *cobra.Command, args []string) {
 	dto := models.ToMetadata(release)
 
 	fmt.Printf("Id: %d\n", dto.Id)
-	fmt.Printf("URL: %s\n", dto.Uri)
+	fmt.Printf("Discogs Link: %s\n", dto.Uri)
 	fmt.Printf("Title: %s\n", dto.Title)
 	fmt.Printf("Artists: %s\n", strings.Join(dto.Artists, ", "))
+	fmt.Printf("Genres: %s\n", strings.Join(dto.Genres, ", "))
+	fmt.Printf("Styles: %s\n", strings.Join(dto.Styles, ", "))
 	fmt.Printf("Year: %d\n", dto.Year)
 	fmt.Printf("Country: %s\n", dto.Country)
 }
