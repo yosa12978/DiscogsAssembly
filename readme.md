@@ -4,6 +4,11 @@
 
 **Before using application you should add DISCASM_HOME enviroment variable which contains path to executable file**
 
+Example for linux:
+
+Add: ```export DISCASM_HOME="/root/DiscogsAssembly/build"``` to the end of .bashrc file and then use ```source .bashrc``` to confirm changes
+
+
 ```
 Discasm is a tool for downloading images from discogs release
 
