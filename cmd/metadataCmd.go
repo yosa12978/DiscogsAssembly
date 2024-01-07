@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/yosa12978/DiscogsAssembly/repos"
@@ -53,7 +54,11 @@ func downloadMetadata(cmd *cobra.Command, args []string) {
 		return
 	}
 	if name == "" {
-		name = release.Title
+		var artists []string
+		for i := 0; i < len(release.Artists); i++ {
+			artists = append(artists, release.Artists[i].Name)
+		}
+		name = fmt.Sprintf("%s - %s", strings.Join(artists, ", "), release.Title)
 	}
 	path, err := cmd.Flags().GetString("output")
 	if err != nil {

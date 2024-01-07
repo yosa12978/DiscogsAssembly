@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/yosa12978/DiscogsAssembly/repos"
@@ -71,7 +72,11 @@ func downloadRelease(cmd *cobra.Command, args []string) {
 			return
 		}
 		if metaname == "" {
-			metaname = release.Title
+			var artists []string
+			for i := 0; i < len(release.Artists); i++ {
+				artists = append(artists, release.Artists[i].Name)
+			}
+			metaname = fmt.Sprintf("%s - %s", strings.Join(artists, ", "), release.Title)
 		}
 		metaServ := services.NewMetadataService()
 		path := fmt.Sprintf("%s/%s %d", output, release.Title, release.Id)

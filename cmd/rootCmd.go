@@ -18,7 +18,7 @@ func init() {
 var rootCmd = &cobra.Command{
 	Use:     "discasm",
 	Short:   "Discasm is a tool for downloading images from discogs release",
-	Version: "0.1-alpha",
+	Version: "0.2-alpha",
 }
 
 func Execute() {
