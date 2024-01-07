@@ -1,9 +1,7 @@
 package services
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 	"time"
@@ -14,7 +12,7 @@ import (
 )
 
 type ImageService interface {
-	Download(uri, output string) error
+	Download(release *models.Release, output string) error
 }
 
 type imageService struct {
@@ -27,11 +25,7 @@ func NewImageService() ImageService {
 	return service
 }
 
-func (service *imageService) Download(id, output string) error {
-	release, err := service.discogsRepo.GetRelease(id)
-	if err != nil {
-		return err
-	}
+func (service *imageService) Download(release *models.Release, output string) error {
 	path, err := service.createPath(output, release)
 	if err != nil {
 		return err
@@ -39,7 +33,6 @@ func (service *imageService) Download(id, output string) error {
 	if err := service.downloadImages(path, release); err != nil {
 		return err
 	}
-	service.saveMetadata(path, release)
 	return nil
 }
 
@@ -66,17 +59,4 @@ func (service *imageService) downloadImages(path string, release *models.Release
 	}
 	fmt.Println("Download complete")
 	return nil
-}
-
-func (service *imageService) saveMetadata(path string, release *models.Release) {
-	metadata := models.ToMetadata(release)
-	metadataPath := fmt.Sprintf("%s/discogs.json", path)
-	metadataFile, err := os.Create(metadataPath)
-	if err != nil {
-		log.Fatalf("error creating metadata file")
-	}
-	defer metadataFile.Close()
-	enc := json.NewEncoder(metadataFile)
-	enc.SetIndent("", "    ")
-	enc.Encode(metadata)
 }

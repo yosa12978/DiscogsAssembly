@@ -9,15 +9,30 @@ type CollectionItem struct {
 }
 
 type Release struct {
-	Id      int      `json:"id"`
-	Title   string   `json:"title"`
-	Country string   `json:"country"`
-	Uri     string   `json:"uri"`
-	Artists []Artist `json:"artists"`
-	Styles  []string `json:"styles"`
-	Images  []Image  `json:"images"`
-	Genres  []string `json:"genres"`
-	Year    int      `json:"year"`
+	Id          int          `json:"id"`
+	Title       string       `json:"title"`
+	Country     string       `json:"country"`
+	Uri         string       `json:"uri"`
+	Artists     []Artist     `json:"artists"`
+	Styles      []string     `json:"styles"`
+	Images      []Image      `json:"images"`
+	Genres      []string     `json:"genres"`
+	Year        int          `json:"year"`
+	Labels      []Label      `json:"labels"`
+	Identifiers []Identifier `json:"identifiers"`
+	Tracklist   []Track      `json:"tracklist"`
+}
+
+type Identifier struct {
+	Type  string `json:"type"`
+	Value string `json:"value"`
+}
+
+type Label struct {
+	Catno      string `json:"catno"`
+	EntityType string `json:"entity_type"`
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
 }
 
 type Image struct {
@@ -28,16 +43,24 @@ type Artist struct {
 	Name string `json:"name"`
 }
 
+type Track struct {
+	Title    string `json:"title"`
+	Duration string `json:"duration"`
+	Position string `json:"position"`
+}
+
 type ReleaseMetadata struct {
-	Id      int      `json:"discogs_id"`
-	Uri     string   `json:"discogs_url"`
-	Artists []string `json:"artists"`
-	Title   string   `json:"title"`
-	Genres  []string `json:"genres"`
-	Styles  []string `json:"styles"`
-	Country string   `json:"country"`
-	Year    int      `json:"year"`
-	Images  []string `json:"images"`
+	Id        int      `json:"discogs_id"`
+	Uri       string   `json:"discogs_url"`
+	Artists   []string `json:"artists"`
+	Title     string   `json:"title"`
+	Genres    []string `json:"genres"`
+	Styles    []string `json:"styles"`
+	Country   string   `json:"country"`
+	Year      int      `json:"year"`
+	Labels    []Label  `json:"labels"`
+	Tracklist []Track  `json:"tracklist"`
+	Images    []string `json:"images,omitempty"`
 }
 
 func ToMetadata(release *Release) *ReleaseMetadata {
@@ -51,15 +74,17 @@ func ToMetadata(release *Release) *ReleaseMetadata {
 	}
 
 	return &ReleaseMetadata{
-		Id:      release.Id,
-		Uri:     release.Uri,
-		Title:   release.Title,
-		Country: release.Country,
-		Genres:  release.Genres,
-		Styles:  release.Styles,
-		Artists: artists,
-		Year:    release.Year,
-		Images:  images,
+		Id:        release.Id,
+		Uri:       release.Uri,
+		Title:     release.Title,
+		Country:   release.Country,
+		Genres:    release.Genres,
+		Styles:    release.Styles,
+		Artists:   artists,
+		Year:      release.Year,
+		Images:    images,
+		Labels:    release.Labels,
+		Tracklist: release.Tracklist,
 	}
 }
 

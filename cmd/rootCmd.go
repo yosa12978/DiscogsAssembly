@@ -11,6 +11,7 @@ func init() {
 	rootCmd.AddCommand(setTokenCmd)
 	rootCmd.AddCommand(downloadReleaseCmd)
 	rootCmd.AddCommand(whoamiCmd)
+	rootCmd.AddCommand(metadataCmd)
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 }
 

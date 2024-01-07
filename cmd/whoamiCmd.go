@@ -21,7 +21,7 @@ func whoami(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	fmt.Printf("Id: %d\n", user.Id)
+	fmt.Printf("Discogs Id: %d\n", user.Id)
 	fmt.Printf("Username: %s\n", user.Username)
 	fmt.Printf("URL: %s\n", user.Resource_url)
 	fmt.Printf("Consumer Name: %s\n", user.Consumer_name)
