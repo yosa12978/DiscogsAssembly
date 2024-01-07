@@ -1,5 +1,9 @@
 # DiscogsAssembly (discasm)
 
+![discasm](logo.jpg)
+
+**Before using application you should add DISCASM_HOME enviroment variable which contains path to executable file**
+
 ```
 Discasm is a tool for downloading images from discogs release
 
@@ -7,11 +11,12 @@ Usage:
   discasm [command]
 
 Available Commands:
-  download    Downloads release images and metadata by it's discogs id
+  download    Download release images and metadata by it's discogs id
   help        Help about any command
+  metadata    Download release metadata by it's discogs id
   release     Fetch release by it's discogs id
-  token       Updates token in configuration
-  whoami      Displays current user information
+  token       Update token in configuration
+  whoami      Display current user information
 
 Flags:
   -h, --help      help for discasm

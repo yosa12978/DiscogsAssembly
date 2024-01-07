@@ -9,7 +9,7 @@ import (
 
 var setTokenCmd = &cobra.Command{
 	Use:     "token",
-	Short:   "Updates token in configuration",
+	Short:   "Update token in configuration",
 	Example: "discasm token {token}",
 	Run:     setToken,
 }

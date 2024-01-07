@@ -18,7 +18,7 @@ func init() {
 
 var downloadReleaseCmd = &cobra.Command{
 	Use:     "download",
-	Short:   "Downloads release images and metadata by it's discogs id",
+	Short:   "Download release images and metadata by it's discogs id",
 	Example: "discasm download {release_id} (flags)",
 	Run:     downloadRelease,
 }

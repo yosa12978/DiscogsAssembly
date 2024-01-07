@@ -13,14 +13,23 @@ func init() {
 	cobra.OnInitialize(initConfig)
 }
 
-const config_file = "./configs/config.json"
+const config_file string = "/configs/config.json"
+
 const basic_config = "{\"discogs\": {\"token\": \"\"}}"
 
+var home_dir string
+
 func initConfig() {
-	_, err := os.Stat(config_file)
+	home_dir = os.Getenv("DISCASM_HOME")
+	if home_dir == "" {
+		fmt.Println("Please setup a DISCASM_HOME env variable")
+		return
+	}
+	config_path := home_dir + config_file
+	_, err := os.Stat(config_path)
 	if err != nil {
-		os.Mkdir("configs", 0666)
-		file, err := os.Create("./configs/config.json")
+		os.Mkdir(home_dir+"/configs", 0666)
+		file, err := os.Create(config_path)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -32,7 +41,7 @@ func initConfig() {
 			os.Exit(1)
 		}
 	}
-	viper.SetConfigFile(config_file)
+	viper.SetConfigFile(config_path)
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Printf("Can't read config: %s\n", err.Error())
 		os.Exit(1)
